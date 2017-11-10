@@ -11,10 +11,13 @@ set(alg_hdr
 	inc/variant.h
 
 	inc/vector.h
+	inc/sorting.h
 )
 
 set(alg_src
 	src/vector.c
+	src/insertion_sort.c
+	src/merge_sort.c
 )
 
 ADD_LIBRARY(Algorithms STATIC ${alg_hdr} ${alg_src})

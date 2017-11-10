@@ -36,6 +36,16 @@ vector_t alloc_vector(size_t size);
 */
 void free_vector(vector_t v);
 
+/*
+	Assign the value of v1 to v0
+*/
+void move_vector(vector_t v0, vector_t v1);
+
+/*
+	Copy a given vector into a new vector
+*/
+vector_t clone_vector(vector_t v);
+
 /*****************************************************************************************************************
 	Operations:
 /*****************************************************************************************************************/

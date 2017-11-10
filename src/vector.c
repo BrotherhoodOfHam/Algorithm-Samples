@@ -91,6 +91,39 @@ void free_vector(vector_t v)
 	free(v);
 }
 
+void move_vector(vector_t v0, vector_t v1)
+{
+	//Free v0's data
+	if (IMPL(v0)->data != NULL)
+	{
+		free(IMPL(v0)->data);
+	}
+
+	//Move v1 to v0
+	IMPL(v0)->data = IMPL(v1)->data;
+	IMPL(v0)->size = IMPL(v1)->size;
+	IMPL(v0)->capacity = IMPL(v1)->capacity;
+
+	IMPL(v1)->data = NULL;
+	IMPL(v1)->size = 0;
+	IMPL(v1)->capacity = 0;
+
+	//Free v1
+	free_vector(v1);
+}
+
+vector_t clone_vector(vector_t v)
+{
+	vector_t clone = alloc_vector(get_vector_size(v));
+
+	for (size_t i = 0; i < get_vector_size(v); i++)
+	{
+		set_vector_element(clone, i, get_vector_element(v, i));
+	}
+
+	return clone;
+}
+
 /*****************************************************************************************************************
 	Operations:
 /*****************************************************************************************************************/
