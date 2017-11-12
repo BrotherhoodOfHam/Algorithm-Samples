@@ -43,6 +43,6 @@ void msort(vector_t vec, variant_comp_f comparator);
 /*
 	Quick sort
 */
-void qsort(vector_t vec, variant_comp_f comparator);
+//void qsort(vector_t vec, variant_comp_f comparator);
 
 /*****************************************************************************************************************/

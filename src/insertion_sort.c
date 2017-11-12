@@ -51,12 +51,4 @@ void isort(vector_t vec, variant_comp_f comparator)
 	move_vector(vec, buffer);
 }
 
-void msort(vector_t vec, variant_comp_f comparator)
-{
-}
-
-void qsort(vector_t vec, variant_comp_f comparator)
-{
-}
-
 /*****************************************************************************************************************/
