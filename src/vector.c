@@ -38,7 +38,7 @@ void resize_vector(impl_vector* v, size_t c)
 	if (v->data != NULL)
 	{
 		//Copy old into new buffer
-		memcpy(b, v->data, v->size);
+		memcpy(b, v->data, v->size * sizeof(variant_t));
 		free(v->data);
 	}
 

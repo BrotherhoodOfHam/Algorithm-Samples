@@ -6,11 +6,15 @@
 
 #include "vector.h"
 #include "sorting.h"
+#include "stack.h"
 
 int main(int argc, char** argv)
 {
 	init_debug();
 
+	/*
+		Test vector
+	*/
 	vector_t vec = init_vector();
 
 	add_vector_element(vec, 14);
@@ -21,8 +25,8 @@ int main(int argc, char** argv)
 	insert_vector_element(vec, 0, 9);
 	insert_vector_element(vec, 3, 99);
 
-	//remove_vector_element(vec, 1);
-	//remove_vector_element(vec, 4);
+	remove_vector_element(vec, 1);
+	remove_vector_element(vec, 4);
 
 	msort(vec, &integer_comparator);
 
@@ -32,6 +36,22 @@ int main(int argc, char** argv)
 	}
 
 	free_vector(vec);
+
+	/*
+		Test stack
+	*/
+	stack_t st = init_stack();
+
+	push_stack(st, 101);
+	push_stack(st, 102);
+	push_stack(st, 103);
+	push_stack(st, 104);
+
+	printf("top(stack) = %d\n", (uint32_t)top_stack(st));
+	pop_stack(st);
+	printf("top(stack) = %d\n", (uint32_t)top_stack(st));
+
+	free_stack(st);
 
 	return 0;
 }
