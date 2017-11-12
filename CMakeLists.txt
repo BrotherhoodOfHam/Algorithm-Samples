@@ -14,6 +14,7 @@ set(alg_hdr
 	inc/vector.h
 	inc/stack.h
 	inc/sorting.h
+    inc/queue.h
 )
 
 set(alg_src
@@ -23,6 +24,7 @@ set(alg_src
 	src/merge_sort.c
 
 	src/stack.c
+    src/queue.c
 )
 
 ADD_LIBRARY(Algorithms STATIC ${alg_hdr} ${alg_src})

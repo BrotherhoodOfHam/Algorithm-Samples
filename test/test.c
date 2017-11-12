@@ -7,6 +7,7 @@
 #include "vector.h"
 #include "sorting.h"
 #include "stack.h"
+#include "queue.h"
 
 int main(int argc, char** argv)
 {
@@ -52,6 +53,24 @@ int main(int argc, char** argv)
 	printf("top(stack) = %d\n", (uint32_t)top_stack(st));
 
 	free_stack(st);
+
+	/*
+		Test queue
+	*/
+	queue_t q = init_queue();
+	push_queue(q, 16);
+	push_queue(q, 64);
+	push_queue(q, 2);
+
+	while (!is_queue_empty(q))
+	{
+		printf("pop(queue) = %d\n", (uint32_t)get_queue_front(q));
+		pop_queue(q);
+	}
+
+	push_queue(q, 1024);
+
+	free_queue(q);
 
 	return 0;
 }
