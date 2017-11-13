@@ -28,6 +28,16 @@ stack_t init_stack();
 void free_stack(stack_t s);
 
 /*
+	Assign the value of s1 to s0
+*/
+void move_stack(stack_t s0, stack_t s1);
+
+/*
+	Copy a stack
+*/
+stack_t clone_stack(stack_t s);
+
+/*
 	Return top element of stack
 */
 variant_t top_stack(stack_t s);
@@ -51,5 +61,10 @@ bool is_stack_empty(stack_t s);
 	Return size of stack
 */
 size_t get_stack_size(stack_t s);
+
+/*
+	Clear stack
+*/
+void clear_stack(stack_t s);
 
 /*****************************************************************************************************************/

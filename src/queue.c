@@ -52,14 +52,38 @@ queue_t init_queue()
 
 void free_queue(queue_t q)
 {
+	clear_queue(q);
+	free(q);
+}
+
+void move_queue(queue_t q0, queue_t q1)
+{
+	assert(q0 != NULL && q1 != NULL);
+
+	clear_queue(q0);
+	IMPL(q0)->first = IMPL(q1)->first;
+	IMPL(q0)->last = IMPL(q1)->last;
+
+	IMPL(q1)->first = NULL;
+	IMPL(q1)->last = NULL;
+
+	free_queue(q1);
+}
+
+queue_t clone_queue(queue_t q)
+{
 	assert(q != NULL);
 
-	if (!is_queue_empty(q))
+	queue_t cq = init_queue();
+
+	queue_link* curlink = IMPL(q)->first;
+	
+	while (curlink != IMPL(q)->last)
 	{
-		free_link(IMPL(q)->first);
+		push_queue(cq, curlink->value);
 	}
 
-	free(q);
+	return cq;
 }
 
 /*****************************************************************************************************************
@@ -68,6 +92,8 @@ void free_queue(queue_t q)
 
 void push_queue(queue_t q, variant_t e)
 {
+	assert(q != NULL);
+
 	impl_queue* iq = IMPL(q);
 
 	if (is_queue_empty(q))
@@ -133,6 +159,19 @@ variant_t get_queue_front(queue_t q)
 {
 	assert(q != NULL);
 	return IMPL(q)->first->value;
+}
+
+void clear_queue(queue_t q)
+{
+	assert(q != NULL);
+
+	if (!is_queue_empty(q))
+	{
+		free_link(IMPL(q)->first);
+	}
+
+	IMPL(q)->first = NULL;
+	IMPL(q)->last = NULL;
 }
 
 /*****************************************************************************************************************/

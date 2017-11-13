@@ -27,6 +27,16 @@ queue_t init_queue();
 void free_queue(queue_t q);
 
 /*
+	Assign the value of q1 to q0
+*/
+void move_queue(queue_t q0, queue_t q1);
+
+/*
+	Copy a given vector into a new vector
+*/
+queue_t clone_queue(queue_t v);
+
+/*
 	Add an element to the queue
 */
 void push_queue(queue_t q, variant_t e);
@@ -50,5 +60,10 @@ size_t get_queue_size(queue_t q);
 	Return front of queue
 */
 variant_t get_queue_front(queue_t q);
+
+/*
+	Clear queue
+*/
+void clear_queue(queue_t q);
 
 /*****************************************************************************************************************/
