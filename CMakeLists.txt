@@ -15,7 +15,7 @@ set(alg_hdr
 	inc/vector.h
 	inc/stack.h
     inc/queue.h
-    
+    inc/graph.h
     inc/tree.h
 )
 
@@ -27,7 +27,7 @@ set(alg_src
 
 	src/stack.c
     src/queue.c
-    
+    src/graph.c
     src/tree.c
 )
 
@@ -42,6 +42,7 @@ set(test_src
     test/test_stack.c
     test/test_queue.c
     test/test_tree.c
+    test/test_graph.c
 )
 
 ADD_EXECUTABLE(Test ${test_src})
