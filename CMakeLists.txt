@@ -1,6 +1,7 @@
 ################################################################################################
 
 cmake_minimum_required (VERSION 3.0.0)
+set(CMAKE_C_FLAGS "-std=c11")
 
 project (Algorithms C)
 
@@ -48,3 +49,5 @@ ADD_EXECUTABLE(Test ${test_src})
 TARGET_LINK_LIBRARIES(Test PUBLIC Algorithms)
 
 ################################################################################################
+
+#set_property(TARGET Test Algorithms PROPERTY C_STANDARD 99)

@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <assert.h>
 
+#include "common.h"
 #include "vector.h"
 #include "sorting.h"
 #include "stack.h"
@@ -18,8 +19,10 @@ int test_tree();
 
 int main(int argc, char** argv)
 {
+#ifdef WIN32
 	init_debug();
-
+#endif
+    
 	printf("~~~~~~~~~ vector ~~~~~~~~~\n");
 	assert(test_vector() == 0);
 	printf("~~~~~~~~~ stack ~~~~~~~~~\n");

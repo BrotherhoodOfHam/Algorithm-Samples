@@ -6,6 +6,14 @@
 
 #include <stdlib.h>
 
+#ifndef min
+#define min(a,b)            (((a) < (b)) ? (a) : (b))
+#endif
+
+#ifndef max
+#define max(a,b)            (((a) > (b)) ? (a) : (b))
+#endif
+
 #ifdef WIN32
 
 #define _CRTDBG_MAP_ALLOC  
