@@ -16,7 +16,6 @@ int test_vector();
 int test_stack();
 int test_queue();
 int test_tree();
-int test_graph();
 
 int main(int argc, char** argv)
 {
@@ -32,8 +31,6 @@ int main(int argc, char** argv)
 	assert(test_queue() == 0);
 	printf("~~~~~~~~~ tree ~~~~~~~~~\n");
 	assert(test_tree() == 0);
-	printf("~~~~~~~~~ graph ~~~~~~~~~\n");
-	assert(test_graph() == 0);
 
 	return 0;
 }

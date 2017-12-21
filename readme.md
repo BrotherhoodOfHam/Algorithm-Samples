@@ -1,16 +1,19 @@
+# Algorithm Samples
 
-Small C based project for playing around with algorithms and data structures.
+Small C/C++ based project containing implementations of various algorithms and data structures.
 For eductional purposes only.
 
-currently implemented:
-- vectors (dynamic array)
-- sorting (merge sort and insertion sort)
-- stacks
-- queues
-- trees
+#### Currently implemented
+* C
+	* vectors (dynamic array)
+	* sorting (merge sort and insertion sort)
+	* stacks
+	* queues
+	* trees
+* C++
 
-todo:
-- graphs (BFS,DFS)
-- sets
-- maps
-- proper unit testing.
+#### Todo:
+* graphs/digraphs
+* graph traversal
+* hash tables
+* btrees
