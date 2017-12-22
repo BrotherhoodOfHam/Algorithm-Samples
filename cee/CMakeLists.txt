@@ -38,6 +38,7 @@ set(test_src
 
 ADD_EXECUTABLE(CAlgorithms ${alg_hdr} ${alg_src} ${test_src})
 TARGET_INCLUDE_DIRECTORIES(CAlgorithms PUBLIC inc)
+SET_TARGET_PROPERTIES(CAlgorithms PROPERTIES LINKER_LANGUAGE C)
 #set_property(TARGET CAlgorithms PROPERTY C_STANDARD 99)
 
 source_group(src FILES ${alg_src})

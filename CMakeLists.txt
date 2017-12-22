@@ -7,10 +7,17 @@
 ################################################################################################
 
 cmake_minimum_required (VERSION 3.0.0)
-#set(CMAKE_C_FLAGS "-std=c11")
-project (Algorithms C)
+
+project (Algorithms)
 
 add_subdirectory(cee)
 add_subdirectory(cpp)
+
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+set_target_properties(
+	CAlgorithms 
+	Algorithms
+	PROPERTIES FOLDER "Samples"
+)
 
 ################################################################################################
