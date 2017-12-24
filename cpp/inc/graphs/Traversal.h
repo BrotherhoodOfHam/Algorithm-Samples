@@ -26,11 +26,10 @@ namespace ag
 	namespace details
 	{
 		template<typename Graph_t>
-		using Stack = std::stack<typename Graph_t::Vertex*, typename Graph_t::Vertex*>;
+		using Stack = std::stack<typename Graph_t::Vertex*>;
 
 		template<typename Graph_t>
-		using Queue = std::queue<typename Graph_t::Vertex*>;//, std::vector<Vtx_t>>;
-
+		using Queue = std::queue<typename Graph_t::Vertex*>;
 	}
 
 	/*
@@ -44,7 +43,7 @@ namespace ag
 	SpanningTree<Graph_t> breadthFirstSearch(
 		const Graph_t& graph,
 		typename Graph_t::Vertex* start,
-		GraphVisitor<Graph_t> visitor
+		GraphVisitor<Graph_t> visitor = [](auto) {}
 	)
 	{
 		using namespace std;
@@ -127,7 +126,7 @@ namespace ag
 	template<typename Graph_t>
 	SpanningTree<Graph_t> depthFirstSearch(
 		const Graph_t& graph,
-		GraphVisitor<Graph_t> visitor
+		GraphVisitor<Graph_t> visitor = [](auto){}
 	)
 	{
 		using namespace std;

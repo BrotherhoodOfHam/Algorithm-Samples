@@ -11,9 +11,9 @@ For eductional purposes only.
 	* queues
 	* trees
 * C++
+	* Digraphs (adjacency list)
+	* BFS/DFS, topological sorting, shortest path, cycle detection
 
 #### Todo:
-* graphs/digraphs
-* graph traversal
 * hash tables
 * btrees

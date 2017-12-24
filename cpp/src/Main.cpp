@@ -7,10 +7,38 @@
 using namespace std;
 using namespace ag;
 
+//Print each vertex and it's adjacency list
+template<typename Graph_t>
+void printGraph(const Graph_t& g)
+{
+	for (auto vtx : g.getVertices())
+	{
+		cout << vtx->value() << ": ";
+
+		for (auto edge : vtx->getEdges())
+		{
+			cout << edge->value() << ", ";
+		}
+
+		cout << "\n";
+	}
+}
+
+template<typename Graph_t>
+void printGraphProperties(const Graph_t& g)
+{
+	cout << "\n# Graph properties:";
+	cout << boolalpha;
+	cout << "\nIs connected => " << isConnected(g);
+	cout << "\nIs strongly connected => " << isStronglyConnected(g);
+	cout << "\nIs acyclic => " << isAcyclic(g);
+	cout << "\n";
+}
+
 //Helper function
 //Prints vector as comma separated list
 template<typename Type>
-void print_vector(const std::vector<Type>& vec)
+void printVector(const std::vector<Type>& vec)
 {
 	//Head
 	auto it = vec.begin();
@@ -28,7 +56,7 @@ void print_vector(const std::vector<Type>& vec)
 }
 
 template<typename Graph_t>
-void print_path(const Path<Graph_t>& path)
+void printPath(const Path<Graph_t>& path)
 {
 	using Value_t = typename Path<Graph_t>::value_type;
 
@@ -92,11 +120,110 @@ int main()
 	vts[6]->addEdge(vts[2]);
 	vts[6]->addEdge(vts[3]);
 
-	cout << "Topological sorting of g:\n";
-	print_vector(topologicalSort(g));
+	cout << "# Graph g:\n";
+	printGraph(g);
+	printGraphProperties(g);
 
-	cout << "Shortest path A -> D:\n";
-	print_path<Digraph<char>>(shortestPath<Digraph<char>>(g, vts[0], vts[3]));
+	cout << "\n# Topological sorting of g:\n";
+	printVector(topologicalSort(g));
+
+	cout << "\n# Shortest path A -> D in g:\n";
+	printPath<Digraph<char>>(shortestPath(g, vts[0], vts[3]));
+
+	cout << "\n# Transpose of g\n";
+	printGraph(transpose(g));
+
+	/*
+		Graph j:
+
+		A - B - C - D
+		|   |   |   |
+		E - F - G - H
+		|   |   |   |
+		I - J - K - L
+	*/
+	cout << "\n# Graph j:\n";
+
+	Digraph<char> j;
+	const size_t gridw = 4;             //Grid width
+	const size_t gridc = gridw * gridw; //Grid cell count
+	Digraph<char>::Vertex* gridvts[gridc];
+
+	//1st pass
+	//Allocate vertices
+	for (size_t i = 0; i < gridc; i++)
+	{
+		gridvts[i] = j.createVertex('A' + (char)i);
+	}
+
+	//2nd pass
+	//Link vertex edges
+	for (size_t i = 0; i < gridc; i++)
+	{
+		const size_t ri = i + 1;     //Index of cell to the right
+		const size_t rb = i + gridw; //Index of cell beneath
+
+		//If indices in range
+		//Add undirected edge
+
+		if (ri < gridc)
+		{
+			gridvts[i]->addEdge(gridvts[ri]);
+			gridvts[ri]->addEdge(gridvts[i]);
+		}
+
+		if (rb < gridc)
+		{
+			gridvts[i]->addEdge(gridvts[rb]);
+			gridvts[rb]->addEdge(gridvts[i]);
+		}
+	}
+
+	printGraph(j);
+	printGraphProperties(j);
+
+	cout << "\n# Shortest path from top-left -> bottom-right in j:\n";
+	printPath<Digraph<char>>(shortestPath(j, gridvts[0], gridvts[gridc - 1]));
+
+	/*
+		Simple DAG
+
+		A--->B
+		|\  /|
+		V vv V
+		C--->D
+	*/
+	cout << "\n# DAG:\n";
+
+	Digraph<char> d;
+
+	auto dA = d.createVertex('A');
+	auto dB = d.createVertex('B');
+	auto dC = d.createVertex('C');
+	auto dD = d.createVertex('D');
+
+	dA->addEdge(dB);
+	dA->addEdge(dC);
+	dA->addEdge(dD);
+
+	dB->addEdge(dC);
+	dB->addEdge(dD);
+
+	dC->addEdge(dD);
+
+	printGraph(d);
+	printGraphProperties(d);
+
+	/*
+		Simple cyclic graph
+
+		A-->B
+		^
+		|
+		v
+		C<->D
+	*/
+	cout << "\n# Cyclic graph h:\n";
 
 	Digraph<char> h;
 	auto vA = h.createVertex('A');
@@ -108,7 +235,9 @@ int main()
 	vC->addEdge(vA);
 	vC->addEdge(vD);
 	vD->addEdge(vC);
-	//cout << boolalpha << isAcyclic(h) << endl;
+
+	printGraph(h);
+	printGraphProperties(h);
 
 	return 0;
 }
