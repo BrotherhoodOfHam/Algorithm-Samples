@@ -9,7 +9,6 @@
 #include <vector>
 #include <memory>
 #include <algorithm>
-#include <iterator>
 
 namespace ag
 {
@@ -109,24 +108,54 @@ namespace ag
 			return nullptr;
 		}
 
+		//Owning list of vertex pointers
+		using VertexPool = std::vector<std::unique_ptr<VertexImpl>>;
+
+		/*
+			Vertex iterator
+		*/
+		class Iterator : public VertexPool::const_iterator
+		{
+		public:
+
+			using Base = typename VertexPool::const_iterator;
+
+			using pointer = VertexRef;
+			using reference = VertexRef;
+
+			Iterator(const Base& base) : Base(base) {}
+
+			reference operator*() const { return (Base::operator*()).get(); }
+			pointer const operator->() const { return (Base::operator*()).get(); }
+		};
+
+		/*
+			Range helper class
+		*/
+		class VertexRange
+		{
+		private:
+
+			Iterator m_begin;
+			Iterator m_end;
+
+		public:
+
+			VertexRange(const VertexPool& pool) :
+				m_begin(pool.cbegin()),
+				m_end(pool.cend())
+			{}
+
+			Iterator begin() const { return m_begin; }
+			Iterator end() const { return m_end; }
+		};
+
 		/*
 			Return list of all vertices in graph
 		*/
-		VertexList getVertices() const
+		VertexRange getVertices() const
 		{
-			using namespace std;
-			vector<VertexRef> vtxs;
-			vtxs.reserve(m_vertices.size());
-
-			//Map unique_ptrs to raw ptrs
-			transform(
-				m_vertices.begin(),
-				m_vertices.end(),
-				back_inserter(vtxs),
-				[](const unique_ptr<VertexImpl>& v)->VertexRef{ return v.get(); }
-			);
-
-			return move(vtxs);
+			return VertexRange(m_vertices);
 		}
 
 		/*
@@ -155,7 +184,7 @@ namespace ag
 	private:
 
 		//vertex list
-		std::vector<std::unique_ptr<VertexImpl>> m_vertices;
+		VertexPool m_vertices;
 	};
 
 

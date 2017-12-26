@@ -103,7 +103,7 @@ int main()
 		g.addVertex('E'),	//4: B, F
 		g.addVertex('F'),	//5: 
 		g.addVertex('G'),	//6: C, D
-		g.addVertex('H')		//7:
+		g.addVertex('H')	//7:
 	};
 
 	//A
