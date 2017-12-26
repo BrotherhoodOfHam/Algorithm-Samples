@@ -1,5 +1,5 @@
 /*
-	Digraph class
+	Graph class
 
 	Implementation of a directed graph using the Adjacency List representation
 */
@@ -10,13 +10,15 @@
 #include <memory>
 #include <algorithm>
 
+#include "../util/Range.h"
+
 namespace ag
 {
 	/*
-		Digraph class
+		AdjacencyGraph class
 	*/
 	template<typename ValueType>
-	class Digraph
+	class AdjacencyGraph
 	{
 	public:
 
@@ -94,25 +96,11 @@ namespace ag
 			return m_vertices.back().get();
 		}
 
-		/*
-			Get a vertex pointer by index in the graph's vertex list
-			Nullptr if index is out of range
-		*/
-		VertexRef getVertex(size_t idx) const
-		{
-			if (idx < m_vertices.size())
-			{
-				return m_vertices.at(idx).get();
-			}
-
-			return nullptr;
-		}
-
 		//Owning list of vertex pointers
 		using VertexPool = std::vector<std::unique_ptr<VertexImpl>>;
 
 		/*
-			Vertex iterator
+			Vertex adapter iterator
 		*/
 		class Iterator : public VertexPool::const_iterator
 		{
@@ -125,37 +113,22 @@ namespace ag
 
 			Iterator(const Base& base) : Base(base) {}
 
-			reference operator*() const { return (Base::operator*()).get(); }
-			pointer const operator->() const { return (Base::operator*()).get(); }
-		};
+			//Operators
+			reference operator*() { return get(); }
+			pointer operator->() { return get(); }
+			Iterator operator+(size_t diff) { return (Base::operator+(diff)); }
 
-		/*
-			Range helper class
-		*/
-		class VertexRange
-		{
 		private:
 
-			Iterator m_begin;
-			Iterator m_end;
-
-		public:
-
-			VertexRange(const VertexPool& pool) :
-				m_begin(pool.cbegin()),
-				m_end(pool.cend())
-			{}
-
-			Iterator begin() const { return m_begin; }
-			Iterator end() const { return m_end; }
+			reference get() { return (Base::operator*()).get(); }
 		};
 
 		/*
 			Return list of all vertices in graph
 		*/
-		VertexRange getVertices() const
+		Range<Iterator> getVertices() const
 		{
-			return VertexRange(m_vertices);
+			return Range<Iterator>(m_vertices.cbegin(), m_vertices.cend());
 		}
 
 		/*

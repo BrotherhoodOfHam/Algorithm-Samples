@@ -163,7 +163,7 @@ namespace ag
 		using Vtx_t = typename GraphType::VertexRef;
 
 		//Get any vertex
-		Vtx_t start = g.getVertex(0);
+		Vtx_t start = g.getVertices()[0];
 
 		//Compute spanning tree
 		SpanningTree<GraphType> span = breadthFirstSearch(g, start);

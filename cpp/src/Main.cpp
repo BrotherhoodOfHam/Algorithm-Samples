@@ -93,8 +93,8 @@ int main()
 		E-->F   G   H
 
 	*/
-	Digraph<char> g;
-	Digraph<char>::VertexRef vts[] = 
+	AdjacencyGraph<char> g;
+	AdjacencyGraph<char>::VertexRef vts[] = 
 	{
 		g.addVertex('A'),	//0: B, E
 		g.addVertex('B'),	//1: C, F, G
@@ -128,7 +128,7 @@ int main()
 	printVector(topologicalSort(g));
 
 	cout << "\n# Shortest path A -> D in g:\n";
-	printPath<Digraph<char>>(shortestPath(g, vts[0], vts[3]));
+	printPath<AdjacencyGraph<char>>(shortestPath(g, vts[0], vts[3]));
 
 	cout << "\n# Transpose of g\n";
 	printGraph(transpose(g));
@@ -144,10 +144,10 @@ int main()
 	*/
 	cout << "\n# Graph j:\n";
 
-	Digraph<char> j;
+	AdjacencyGraph<char> j;
 	const size_t gridw = 4;             //Grid width
 	const size_t gridc = gridw * gridw; //Grid cell count
-	Digraph<char>::VertexRef gridvts[gridc];
+	AdjacencyGraph<char>::VertexRef gridvts[gridc];
 
 	//1st pass
 	//Allocate vertices
@@ -183,7 +183,7 @@ int main()
 	printGraphProperties(j);
 
 	cout << "\n# Shortest path from top-left -> bottom-right in j:\n";
-	printPath<Digraph<char>>(shortestPath(j, gridvts[0], gridvts[gridc - 1]));
+	printPath<AdjacencyGraph<char>>(shortestPath(j, gridvts[0], gridvts[gridc - 1]));
 
 	/*
 		Simple DAG
@@ -195,7 +195,7 @@ int main()
 	*/
 	cout << "\n# DAG:\n";
 
-	Digraph<char> d;
+	AdjacencyGraph<char> d;
 
 	auto dA = d.addVertex('A');
 	auto dB = d.addVertex('B');
@@ -225,7 +225,7 @@ int main()
 	*/
 	cout << "\n# Cyclic graph h:\n";
 
-	Digraph<char> h;
+	AdjacencyGraph<char> h;
 	auto vA = h.addVertex('A');
 	auto vB = h.addVertex('B');
 	auto vC = h.addVertex('C');

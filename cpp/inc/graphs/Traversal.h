@@ -11,7 +11,8 @@
 #include <stack>
 #include <queue>
 
-#include "Digraph.h"
+#include "AdjacencyGraph.h"
+#include "MatrixGraph.h"
 
 namespace ag
 {

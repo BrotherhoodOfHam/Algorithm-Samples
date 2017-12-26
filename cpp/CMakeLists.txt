@@ -4,9 +4,11 @@
 #
 
 set(alg_hdr
-	inc/graphs/Digraph.h
+	inc/graphs/AdjacencyGraph.h
+	inc/graphs/MatrixGraph.h
 	inc/graphs/Traversal.h
 	inc/graphs/Algorithms.h
+	inc/util/Range.h
 )
 
 set(alg_src
