@@ -16,20 +16,20 @@
 namespace ag
 {
 	//Visitor delegate
-	template<typename Graph_t>
-	using GraphVisitor = std::function<void(typename Graph_t::Vertex*)>;
+	template<typename GraphType>
+	using GraphVisitor = std::function<void(typename GraphType::VertexRef)>;
 
 	//Spanning tree - maps a vertex to it's parent
-	template<typename Graph_t>
-	using SpanningTree = std::unordered_map<typename Graph_t::Vertex*, typename Graph_t::Vertex*>;
+	template<typename GraphType>
+	using SpanningTree = std::unordered_map<typename GraphType::VertexRef, typename GraphType::VertexRef>;
 
 	namespace details
 	{
-		template<typename Graph_t>
-		using Stack = std::stack<typename Graph_t::Vertex*>;
+		template<typename GraphType>
+		using Stack = std::stack<typename GraphType::VertexRef>;
 
-		template<typename Graph_t>
-		using Queue = std::queue<typename Graph_t::Vertex*>;
+		template<typename GraphType>
+		using Queue = std::queue<typename GraphType::VertexRef>;
 	}
 
 	/*
@@ -39,19 +39,19 @@ namespace ag
 
 		Returns a breadth-first spanning tree.
 	*/
-	template<typename Graph_t>
-	SpanningTree<Graph_t> breadthFirstSearch(
-		const Graph_t& graph,
-		typename Graph_t::Vertex* start,
-		GraphVisitor<Graph_t> visitor = [](auto) {}
+	template<typename GraphType>
+	SpanningTree<GraphType> breadthFirstSearch(
+		const GraphType& graph,
+		typename GraphType::VertexRef start,
+		GraphVisitor<GraphType> visitor = [](auto) {}
 	)
 	{
 		using namespace std;
 
 		//Spanning tree of graph
-		SpanningTree<Graph_t> span;
+		SpanningTree<GraphType> span;
 		//Vertex queue - stores adjacent vertices
-		details::Queue<Graph_t> q;
+		details::Queue<GraphType> q;
 
 		//Initialize spanning tree to null
 		for (auto vtx : graph.getVertices())
@@ -89,11 +89,11 @@ namespace ag
 	/*
 		Depth first search a given vertex
 	*/
-	template<typename Graph_t>
+	template<typename GraphType>
 	void depthFirstSearch(
-		typename Graph_t::Vertex* vertex,
-		SpanningTree<Graph_t>& span,
-		GraphVisitor<Graph_t> visitor
+		typename GraphType::VertexRef vertex,
+		SpanningTree<GraphType>& span,
+		GraphVisitor<GraphType> visitor
 	)
 	{
 		//vertex discovered
@@ -106,7 +106,7 @@ namespace ag
 				//Set parent vertex of edge
 				span[edge] = vertex;
 				//Search edge recursively
-				depthFirstSearch<Graph_t>(edge, span, visitor);
+				depthFirstSearch<GraphType>(edge, span, visitor);
 			}
 		}
 
@@ -123,16 +123,16 @@ namespace ag
 
 		Returns a depth-first spanning forest
 	*/
-	template<typename Graph_t>
-	SpanningTree<Graph_t> depthFirstSearch(
-		const Graph_t& graph,
-		GraphVisitor<Graph_t> visitor = [](auto){}
+	template<typename GraphType>
+	SpanningTree<GraphType> depthFirstSearch(
+		const GraphType& graph,
+		GraphVisitor<GraphType> visitor = [](auto){}
 	)
 	{
 		using namespace std;
 
 		//Spanning tree of graph
-		SpanningTree<Graph_t> span;
+		SpanningTree<GraphType> span;
 
 		auto vertexList = graph.getVertices();
 
@@ -149,7 +149,7 @@ namespace ag
 			if (span[u] == nullptr)
 			{
 				//Visit recursively
-				depthFirstSearch<Graph_t>(u, span, visitor);
+				depthFirstSearch<GraphType>(u, span, visitor);
 			}
 		}
 

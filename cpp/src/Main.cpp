@@ -8,8 +8,8 @@ using namespace std;
 using namespace ag;
 
 //Print each vertex and it's adjacency list
-template<typename Graph_t>
-void printGraph(const Graph_t& g)
+template<typename GraphType>
+void printGraph(const GraphType& g)
 {
 	for (auto vtx : g.getVertices())
 	{
@@ -24,8 +24,8 @@ void printGraph(const Graph_t& g)
 	}
 }
 
-template<typename Graph_t>
-void printGraphProperties(const Graph_t& g)
+template<typename GraphType>
+void printGraphProperties(const GraphType& g)
 {
 	cout << "\n# Graph properties:";
 	cout << boolalpha;
@@ -55,12 +55,12 @@ void printVector(const std::vector<Type>& vec)
 	cout << endl;
 }
 
-template<typename Graph_t>
-void printPath(const Path<Graph_t>& path)
+template<typename GraphType>
+void printPath(const Path<GraphType>& path)
 {
-	using Value_t = typename Path<Graph_t>::value_type;
+	using ValueType = typename Path<GraphType>::value_type;
 
-	auto print_pair = [](Value_t value)
+	auto print_pair = [](ValueType value)
 	{
 		cout << "(" << value.first->value() << ", " << value.second->value() << ")";
 	};
@@ -94,16 +94,16 @@ int main()
 
 	*/
 	Digraph<char> g;
-	Digraph<char>::Vertex* vts[] = 
+	Digraph<char>::VertexRef vts[] = 
 	{
-		g.createVertex('A'),	//0: B, E
-		g.createVertex('B'),	//1: C, F, G
-		g.createVertex('C'),	//2: 
-		g.createVertex('D'),	//3: 
-		g.createVertex('E'),	//4: B, F
-		g.createVertex('F'),	//5: 
-		g.createVertex('G'),	//6: C, D
-		g.createVertex('H')		//7:
+		g.addVertex('A'),	//0: B, E
+		g.addVertex('B'),	//1: C, F, G
+		g.addVertex('C'),	//2: 
+		g.addVertex('D'),	//3: 
+		g.addVertex('E'),	//4: B, F
+		g.addVertex('F'),	//5: 
+		g.addVertex('G'),	//6: C, D
+		g.addVertex('H')		//7:
 	};
 
 	//A
@@ -147,13 +147,13 @@ int main()
 	Digraph<char> j;
 	const size_t gridw = 4;             //Grid width
 	const size_t gridc = gridw * gridw; //Grid cell count
-	Digraph<char>::Vertex* gridvts[gridc];
+	Digraph<char>::VertexRef gridvts[gridc];
 
 	//1st pass
 	//Allocate vertices
 	for (size_t i = 0; i < gridc; i++)
 	{
-		gridvts[i] = j.createVertex('A' + (char)i);
+		gridvts[i] = j.addVertex('A' + (char)i);
 	}
 
 	//2nd pass
@@ -197,10 +197,10 @@ int main()
 
 	Digraph<char> d;
 
-	auto dA = d.createVertex('A');
-	auto dB = d.createVertex('B');
-	auto dC = d.createVertex('C');
-	auto dD = d.createVertex('D');
+	auto dA = d.addVertex('A');
+	auto dB = d.addVertex('B');
+	auto dC = d.addVertex('C');
+	auto dD = d.addVertex('D');
 
 	dA->addEdge(dB);
 	dA->addEdge(dC);
@@ -226,10 +226,10 @@ int main()
 	cout << "\n# Cyclic graph h:\n";
 
 	Digraph<char> h;
-	auto vA = h.createVertex('A');
-	auto vB = h.createVertex('B');
-	auto vC = h.createVertex('C');
-	auto vD = h.createVertex('D');
+	auto vA = h.addVertex('A');
+	auto vB = h.addVertex('B');
+	auto vC = h.addVertex('C');
+	auto vD = h.addVertex('D');
 	vA->addEdge(vB);
 	vB->addEdge(vC);
 	vC->addEdge(vA);

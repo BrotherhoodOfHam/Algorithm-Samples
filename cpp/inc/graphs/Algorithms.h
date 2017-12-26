@@ -16,14 +16,14 @@ namespace ag
 		Such that for every edge (u,v): u appears before v in the list.
 	*/
 	template<
-		typename Value_t,
+		typename ValueType,
 		template<typename T> class Graph_t
 	>
-	std::vector<Value_t> topologicalSort(const Graph_t<Value_t>& g)
+	std::vector<ValueType> topologicalSort(const Graph_t<ValueType>& g)
 	{
 		using namespace std;
 
-		vector<Value_t> values;
+		vector<ValueType> values;
 		values.reserve(g.getVertexCount());
 
 		//The order that the vertices are discovered is the topological sorting
@@ -39,13 +39,13 @@ namespace ag
 	/*
 		Checks if a given graph doesn't contain cycles
 	*/
-	template<typename Graph_t>
-	bool isAcyclic(const Graph_t& g)
+	template<typename GraphType>
+	bool isAcyclic(const GraphType& g)
 	{
 		//Construct depth first forest
-		SpanningTree<Graph_t> span = depthFirstSearch(g);
+		SpanningTree<GraphType> span = depthFirstSearch(g);
 
-		using Vtx_t = typename Graph_t::Vertex*;
+		using Vtx_t = typename GraphType::VertexRef;
 
 		//Foreach vertex
 		for (Vtx_t vtx : g.getVertices())
@@ -74,31 +74,31 @@ namespace ag
 
 		Represented by a list of pairs of vertices
 	*/
-	template<typename Graph_t>
-	using Path = std::vector<std::pair<typename Graph_t::Vertex*, typename Graph_t::Vertex*>>;
+	template<typename GraphType>
+	using Path = std::vector<std::pair<typename GraphType::VertexRef, typename GraphType::VertexRef>>;
 
 	/*
 		Compute the shortest Path between two vertices in a given graph
 	*/
-	template<typename Graph_t>
-	Path<Graph_t> shortestPath(
-		const Graph_t& g,
-		typename Graph_t::Vertex* a,
-		typename Graph_t::Vertex* b
+	template<typename GraphType>
+	Path<GraphType> shortestPath(
+		const GraphType& g,
+		typename GraphType::VertexRef a,
+		typename GraphType::VertexRef b
 	)
 	{
 		using namespace std;
 
-		Path<Graph_t> path;
+		Path<GraphType> path;
 
 		//Compute bfs spanning tree
-		SpanningTree<Graph_t> span = breadthFirstSearch(g, a);
+		SpanningTree<GraphType> span = breadthFirstSearch(g, a);
 
 		//If vertex b is reachable from a
 		if (span.find(b) != span.end())
 		{
 			//Current vertex
-			typename Graph_t::Vertex* cur = b;
+			typename GraphType::VertexRef cur = b;
 
 			while (cur != a)
 			{
@@ -119,33 +119,33 @@ namespace ag
 	/*
 		Return a graph where all edge directions are reversed
 	*/
-	template<typename Graph_t>
-	Graph_t transpose(const Graph_t& graph)
+	template<typename GraphType>
+	GraphType transpose(const GraphType& graph)
 	{
 		using namespace std;
 
-		using Vtx_t = typename Graph_t::Vertex*;
+		using VtxType = typename GraphType::VertexRef;
 
-		unordered_map<Vtx_t, Vtx_t> vertexMap;
+		unordered_map<VtxType, VtxType> vertexMap;
 
 		//Resulting transposed graph
-		Graph_t tgraph;
+		GraphType tgraph;
 
 		//Preallocate new vertices in transposed graph
-		for (Vtx_t vtx : graph.getVertices())
+		for (VtxType vtx : graph.getVertices())
 		{
 			//Map old vertex -> transposed vertex
-			vertexMap.insert(make_pair(vtx, tgraph.createVertex(vtx->value())));
+			vertexMap.insert(make_pair(vtx, tgraph.addVertex(vtx->value())));
 		}
 
 		//For each vertex pair
 		for (auto pair : vertexMap)
 		{
-			Vtx_t old = pair.first;
-			Vtx_t cur = pair.second;
+			VtxType old = pair.first;
+			VtxType cur = pair.second;
 
 			//For each edge in old vertex
-			for (Vtx_t edge : old->getEdges())
+			for (VtxType edge : old->getEdges())
 			{
 				vertexMap[edge]->addEdge(cur);
 			}
@@ -157,16 +157,16 @@ namespace ag
 	/*
 		Checks if all vertices are reachable from some vertex
 	*/
-	template<typename Graph_t>
-	bool isConnected(const Graph_t& g)
+	template<typename GraphType>
+	bool isConnected(const GraphType& g)
 	{
-		using Vtx_t = typename Graph_t::Vertex*;
+		using Vtx_t = typename GraphType::VertexRef;
 
 		//Get any vertex
 		Vtx_t start = g.getVertex(0);
 
 		//Compute spanning tree
-		SpanningTree<Graph_t> span = breadthFirstSearch(g, start);
+		SpanningTree<GraphType> span = breadthFirstSearch(g, start);
 
 		//The graph is connected if all vertices are reachable from start
 		for (Vtx_t vtx : g.getVertices())
@@ -187,8 +187,8 @@ namespace ag
 	/*
 		Checks if a graph is strongly connected
 	*/
-	template<typename Graph_t>
-	bool isStronglyConnected(const Graph_t& g)
+	template<typename GraphType>
+	bool isStronglyConnected(const GraphType& g)
 	{
 		return isConnected(g) && isConnected(transpose(g));
 	}

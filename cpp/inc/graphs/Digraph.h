@@ -16,23 +16,26 @@ namespace ag
 	/*
 		Digraph class
 	*/
-	template<typename Value_t>
+	template<typename ValueType>
 	class Digraph
 	{
 	public:
 
-		class Vertex;
-		using EdgeList = std::vector<Vertex*>;
+		class VertexImpl;
+
+		using VertexRef = VertexImpl*;
+		using VertexList = std::vector<VertexRef>;
+		using EdgeList = std::vector<VertexRef>;
 
 		/*
 			Graph Vertex
 		*/
-		class Vertex
+		class VertexImpl
 		{
 		private:
 
 			//Value
-			Value_t m_value;
+			ValueType m_value;
 			//Adjacent vertices
 			EdgeList m_edges;
 
@@ -41,25 +44,25 @@ namespace ag
 			/*
 				Default constructor
 			*/
-			Vertex() {}
+			VertexImpl() {}
 
 			/*
 				Construct vertex with given value
 			*/
-			Vertex(Value_t value) :
+			VertexImpl(ValueType value) :
 				m_value(value)
 			{}
 
 			/*
 				Get vertex value
 			*/
-			const Value_t& value() const { return m_value; }
-			Value_t& value() { return m_value; }
+			const ValueType& value() const { return m_value; }
+			ValueType& value() { return m_value; }
 
 			/*
 				Set vertex value
 			*/
-			void setValue(Value_t value) { m_value = std::move(value); }
+			void setValue(ValueType value) { m_value = std::move(value); }
 
 			/*
 				Get edge list
@@ -69,7 +72,7 @@ namespace ag
 			/*
 				Add an edge between two vertices
 			*/
-			void addEdge(Vertex* vtx)
+			void addEdge(VertexRef vtx)
 			{
 				using namespace std;
 				
@@ -86,9 +89,9 @@ namespace ag
 			Create a new vertex in the graph
 			And initialize it to a given value.
 		*/
-		Vertex* createVertex(Value_t val)
+		VertexRef addVertex(ValueType val)
 		{
-			m_vertices.emplace_back(new Vertex(val));
+			m_vertices.emplace_back(new VertexImpl(val));
 			return m_vertices.back().get();
 		}
 
@@ -96,7 +99,7 @@ namespace ag
 			Get a vertex pointer by index in the graph's vertex list
 			Nullptr if index is out of range
 		*/
-		Vertex* getVertex(size_t idx) const
+		VertexRef getVertex(size_t idx) const
 		{
 			if (idx < m_vertices.size())
 			{
@@ -109,10 +112,10 @@ namespace ag
 		/*
 			Return list of all vertices in graph
 		*/
-		std::vector<Vertex*> getVertices() const
+		VertexList getVertices() const
 		{
 			using namespace std;
-			vector<Vertex*> vtxs;
+			vector<VertexRef> vtxs;
 			vtxs.reserve(m_vertices.size());
 
 			//Map unique_ptrs to raw ptrs
@@ -120,7 +123,7 @@ namespace ag
 				m_vertices.begin(),
 				m_vertices.end(),
 				back_inserter(vtxs),
-				[](const unique_ptr<Vertex>& v)->Vertex*{ return v.get(); }
+				[](const unique_ptr<VertexImpl>& v)->VertexRef{ return v.get(); }
 			);
 
 			return move(vtxs);
@@ -152,7 +155,7 @@ namespace ag
 	private:
 
 		//vertex list
-		std::vector<std::unique_ptr<Vertex>> m_vertices;
+		std::vector<std::unique_ptr<VertexImpl>> m_vertices;
 	};
 
 
