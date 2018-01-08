@@ -29,7 +29,7 @@ typedef struct _impl_vector
 ******************************************************************************************************************/
 
 //grow internal capacity
-void resize_vector(impl_vector* v, size_t c)
+void realloc_vector(impl_vector* v, size_t c)
 {
 	//Allocate new buffer
 	void* b = malloc(sizeof(variant_t) * c);
@@ -49,7 +49,7 @@ void resize_vector(impl_vector* v, size_t c)
 //scale internal capacity
 void scale_vector(impl_vector* v)
 {
-	resize_vector(v, max(v->capacity * VECTOR_RESIZE_SCALE, MIN_VECTOR_CAPACITY));
+	realloc_vector(v, max(v->capacity * VECTOR_RESIZE_SCALE, MIN_VECTOR_CAPACITY));
 }
 
 /******************************************************************************************************************/
@@ -70,7 +70,7 @@ vector_t alloc_vector(size_t size)
 	impl_vector* v = (impl_vector*)init_vector();
 	
 	//Resize capacity
-	resize_vector(v, max(size, MIN_VECTOR_CAPACITY));
+	realloc_vector(v, max(size, MIN_VECTOR_CAPACITY));
 	//Update size attribute
 	v->size = size;
 
@@ -81,8 +81,8 @@ void free_vector(vector_t v)
 {
 	assert(v != NULL);
 
-	//free data
-	if (!is_vector_empty(v))
+	//free vector data
+	if (IMPL(v)->data != NULL)
 	{
 		free(IMPL(v)->data);
 	}
@@ -110,6 +110,12 @@ void move_vector(vector_t v0, vector_t v1)
 
 	//Free v1
 	free_vector(v1);
+}
+
+void shrink_vector(vector_t v, size_t n)
+{
+	n = min(IMPL(v)->size, n);
+	IMPL(v)->size -= n;
 }
 
 vector_t clone_vector(vector_t v)

@@ -42,6 +42,11 @@ void free_vector(vector_t v);
 void move_vector(vector_t v0, vector_t v1);
 
 /*
+	Shrink a vector by n
+*/
+void shrink_vector(vector_t v, size_t n);
+
+/*
 	Copy a given vector into a new vector
 */
 vector_t clone_vector(vector_t v);

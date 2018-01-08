@@ -15,6 +15,7 @@ set(alg_hdr
 	inc/stack.h
     inc/queue.h
     inc/tree.h
+	inc/heap.h
 )
 
 set(alg_src
@@ -26,6 +27,7 @@ set(alg_src
 	src/stack.c
     src/queue.c
     src/tree.c
+	src/heap.c
 )
 
 set(test_src
@@ -34,6 +36,7 @@ set(test_src
     test/test_stack.c
     test/test_queue.c
     test/test_tree.c
+    test/test_heap.c
 )
 
 ADD_EXECUTABLE(CAlgorithms ${alg_hdr} ${alg_src} ${test_src})
