@@ -16,6 +16,8 @@ set(alg_hdr
     inc/queue.h
     inc/tree.h
 	inc/heap.h
+	
+	inc/assert.h
 )
 
 set(alg_src
@@ -29,6 +31,8 @@ set(alg_src
     src/queue.c
     src/tree.c
 	src/heap.c
+
+	src/assert.c
 )
 
 set(test_src

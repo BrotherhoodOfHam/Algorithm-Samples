@@ -2,9 +2,8 @@
 	Quicksort implementation
 */
 
-#include <assert.h>
 #include <stdlib.h>
-
+#include "assert.h"
 #include "sorting.h"
 
 /*****************************************************************************************************************/

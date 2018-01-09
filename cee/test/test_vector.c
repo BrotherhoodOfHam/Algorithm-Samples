@@ -3,7 +3,7 @@
 */
 
 #include <stdio.h>
-#include <assert.h>
+#include "assert.h"
 
 #include "vector.h"
 #include "sorting.h"

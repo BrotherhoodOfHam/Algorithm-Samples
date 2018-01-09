@@ -5,7 +5,7 @@
 #include "heap.h"
 #include "sorting.h"
 
-#include <assert.h>
+#include "assert.h"
 
 int test_heap()
 {
