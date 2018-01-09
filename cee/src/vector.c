@@ -227,6 +227,17 @@ void insert_vector_element(vector_t v, index_t idx, variant_t value)
 	iv->size++;
 }
 
+void swap_vector_element(vector_t v, index_t a, index_t b)
+{
+	assert(v != NULL);
+	assert(a >= 0 && a < get_vector_size(v));
+	assert(b >= 0 && b < get_vector_size(v));
+
+	variant_t val = get_vector_element(v, a);
+	set_vector_element(v, a, get_vector_element(v, b));
+	set_vector_element(v, b, val);
+}
+
 void clear_vector(vector_t v)
 {
 	assert(v != NULL);

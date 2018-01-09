@@ -72,6 +72,8 @@ variant_t remove_vector_element(vector_t v, index_t idx);
 
 void insert_vector_element(vector_t v, index_t idx, variant_t value);
 
+void swap_vector_element(vector_t v, index_t a, index_t b);
+
 void clear_vector(vector_t v);
 
 /*****************************************************************************************************************/

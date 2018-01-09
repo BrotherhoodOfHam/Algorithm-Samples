@@ -29,20 +29,30 @@ static int32_t integer_comparator(variant_t a, variant_t b)
 /*
 	Insertion sort
 
+	Best-case:  O(n)
 	Worst-case: O(n^2)
 */
-void isort(vector_t vec, variant_comp_f comparator);
+void insertionsort(vector_t vec, variant_comp_f comparator);
 
 /*
 	Merge sort
 
-	Worst-case: O(nlogn)
+	A divide and conquer sorting algorithm.
+
+	Average-case:  O(nlogn)
+	Worst-case:    O(nlogn)
 */
-void msort(vector_t vec, variant_comp_f comparator);
+void mergesort(vector_t vec, variant_comp_f comparator);
 
 /*
 	Quick sort
+
+	A divide and conquer sorting algorithm.
+	Elements are sorted in-place.
+
+	Average-case:  O(nlogn)
+	Worst-case:    O(n^2)
 */
-//void qsort(vector_t vec, variant_comp_f comparator);
+void quicksort(vector_t vec, variant_comp_f comparator);
 
 /*****************************************************************************************************************/

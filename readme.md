@@ -6,10 +6,11 @@ For eductional purposes only.
 #### Currently implemented
 * C
 	* vectors (dynamic array)
-	* sorting (merge sort and insertion sort)
+	* sorting (merge sort, insertion sort, quick sort)
 	* stacks
 	* queues
 	* trees
+	* binary heaps
 * C++
 	* Digraphs (adjacency list)
 	* BFS/DFS, topological sorting, shortest path, cycle detection

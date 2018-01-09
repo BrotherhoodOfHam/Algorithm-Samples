@@ -54,11 +54,6 @@ nodeview_t parent(nodeview_t idx);
 nodeview_t rchild(nodeview_t idx);
 nodeview_t lchild(nodeview_t idx);
 
-/*
-	Swap two values
-*/
-void swap(vector_t elements, nodeview_t a, nodeview_t b);
-
 /*****************************************************************************************************************/
 
 heap_t init_heap(variant_comp_f comparator)
@@ -174,7 +169,7 @@ void heapify_parent(heap_t heap, nodeview_t node)
 		if (comp(GETVAL(curNode), GETVAL(parentNode)) > 0)
 		{
 			//Swap values of both nodes
-			swap(elements, curNode, parentNode);
+			swap_vector_element(elements, curNode, parentNode);
 		}
 
 		//Parent is next node
@@ -197,7 +192,7 @@ void heapify_children(heap_t heap, nodeview_t node)
 		if (comp(GETVAL(node), GETVAL(child)) < 0)
 		{
 			//If the child is larger swap values
-			swap(elements, node, child);
+			swap_vector_element(elements, node, child);
 
 			//Recursively heapify children
 			heapify_children(heap, child);
@@ -238,13 +233,6 @@ nodeview_t lchild(nodeview_t idx)
 nodeview_t rchild(nodeview_t idx)
 {
 	return (2 * idx) + 2;
-}
-
-void swap(vector_t elements, nodeview_t a, nodeview_t b)
-{
-	variant_t val = get_vector_element(elements, a);
-	set_vector_element(elements, a, get_vector_element(elements, b));
-	set_vector_element(elements, b, val);
 }
 
 /*****************************************************************************************************************/

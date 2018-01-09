@@ -23,6 +23,7 @@ set(alg_src
 	src/vector.c
 	src/insertion_sort.c
 	src/merge_sort.c
+    src/quick_sort.c
 
 	src/stack.c
     src/queue.c

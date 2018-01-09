@@ -57,7 +57,7 @@ static vector_t merge(vector_t a, vector_t b, variant_comp_f comp)
 	return temp;
 }
 
-static vector_t merge_sort(vector_t input, variant_comp_f comp)
+static vector_t sort(vector_t input, variant_comp_f comp)
 {
 	size_t n = get_vector_size(input);
 
@@ -71,15 +71,15 @@ static vector_t merge_sort(vector_t input, variant_comp_f comp)
 	}
 	else
 	{
-		vector_t v = merge(merge_sort(subvector(input, 0, n / 2), comp), merge_sort(subvector(input, n / 2, n), comp), comp);
+		vector_t v = merge(sort(subvector(input, 0, n / 2), comp), sort(subvector(input, n / 2, n), comp), comp);
 		free_vector(input);
 		return v;
 	}
 }
 
-void msort(vector_t vec, variant_comp_f comparator)
+void mergesort(vector_t vec, variant_comp_f comparator)
 {
-	move_vector(vec, merge_sort(clone_vector(vec), comparator));
+	move_vector(vec, sort(clone_vector(vec), comparator));
 }
 
 /*****************************************************************************************************************/

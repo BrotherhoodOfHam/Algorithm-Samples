@@ -35,7 +35,7 @@ static void insert(vector_t vec, variant_t value, variant_comp_f comparator)
 	}
 }
 
-void isort(vector_t vec, variant_comp_f comparator)
+void insertionsort(vector_t vec, variant_comp_f comparator)
 {
 	assert(comparator != NULL);
 
