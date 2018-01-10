@@ -8,18 +8,18 @@
 
 #ifdef WIN32
 #include <Windows.h>
-#define invoke_debugger DebugBreak 
+#define INVOKE_DEBUGGER DebugBreak 
 #else
-#define invoke_debugger()
+#define INVOKE_DEBUGGER()
 #endif
 
 void _assert(bool result, const char* expr, const char* msg, const char* file, int line)
 {
 	if (!result)
 	{
-		fprintf(stderr, "ERROR: \"%s\"\n%s\nfile = %s\nline = %d", expr, msg, file, line);
+		fprintf(stderr, "ERROR: %s\nexpression = \"%s\"\nfile = %s\nline = %d", msg, expr, file, line);
 
-		invoke_debugger();
+		INVOKE_DEBUGGER();
 
 		exit(EXIT_FAILURE);
 	}

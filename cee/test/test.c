@@ -18,6 +18,7 @@ int test_stack();
 int test_queue();
 int test_tree();
 int test_heap();
+int test_bst();
 
 int main(int argc, char** argv)
 {
@@ -33,6 +34,8 @@ int main(int argc, char** argv)
 	assert(test_tree() == 0);
 	printf("~~~~~~~~~ heap ~~~~~~~~~\n");
 	assert(test_heap() == 0);
+	printf("~~~~~~~~~ binary search tree ~~~~~~~~~\n");
+	assert(test_bst() == 0);
 
 	return 0;
 }
